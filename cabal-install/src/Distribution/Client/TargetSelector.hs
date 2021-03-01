@@ -1752,7 +1752,7 @@ getKnownTargets :: (Applicative m, Monad m)
                 -> m KnownTargets
 getKnownTargets dirActions@DirActions{..} pkgs = do
     pinfo <- traverse (collectKnownPackageInfo dirActions) pkgs
-    cwd   <- getCurrentDirectory
+    cwd   <- canonicalizePath =<< getCurrentDirectory
     let (ppinfo, opinfo) = selectPrimaryPackage cwd pinfo
     return KnownTargets {
       knownPackagesAll       = pinfo,
